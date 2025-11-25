@@ -2,8 +2,8 @@
 import { useEffect, useState } from 'react';
 
 export default function Home() {
-    const [files, setFiles] = useState([]);
-    const [file, setFile] = useState(null);
+    const [files, setFiles] = useState<{ id: string; name: string }[]>([]);
+    const [file, setFile] = useState<File | null>(null);
 
     useEffect(() => {
         fetch('/api/files')
@@ -20,6 +20,7 @@ export default function Home() {
 
     const handleUpload = async (event:any) => {
         event.preventDefault();
+        if (!file) return;
         const formData = new FormData();
         formData.append('file', file);
 

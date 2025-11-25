@@ -4,6 +4,13 @@ import db from '../../../db';
 import fs from 'fs';
 import path from 'path';
 
+interface FileRecord {
+    id: number;
+    name: string;
+    path: string;
+    // add other fields as needed
+}
+
 export async function GET(request: Request) {
     const url = new URL(request.url);
     const idParam = url.searchParams.get('id');
@@ -14,7 +21,7 @@ export async function GET(request: Request) {
     }
 
     const stmt = db.prepare("SELECT * FROM files WHERE id = ?");
-    const result = stmt.get(id);
+    const result = stmt.get(id) as FileRecord | undefined;
 
     if (!result) {
         return NextResponse.json({ error: "File not found." }, { status: 404 });

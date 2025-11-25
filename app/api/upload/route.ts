@@ -24,7 +24,6 @@ export async function POST(request: Request) {
 
     const stmt = db.prepare("INSERT INTO files (name, path) VALUES (?, ?)");
     stmt.run(filename, filePath);
-    stmt.finalize();
 
     return NextResponse.json({ message: 'File uploaded successfully' });
 }
